@@ -1,8 +1,6 @@
-<main class="m-auto grow flex flex-col min-h-screen">
-  <router-outlet />
-
-  <div class="flex-1 grow">
-    {{title}}
-  </div>
-
-</main>
+<div class="h-dvh flex flex-col bg-zinc-50 text-zinc-900 overflow-hidden">
+  <app-header />
+  <main class="grow overflow-y-auto p-4 md:p-8">
+    <router-outlet></router-outlet>
+  </main>
+</div>
