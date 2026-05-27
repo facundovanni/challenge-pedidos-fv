@@ -7,7 +7,11 @@ export const routes: Routes = [
     component: HomePageComponent
   },
   {
+    path: 'products',
+    loadChildren: () => import('./features/products/products.routes'),
+  },
+  {
     path: '**',
-    redirectTo: '/'
+    redirectTo: ''
   }
 ];
