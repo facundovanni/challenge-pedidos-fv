@@ -8,6 +8,7 @@ import { ProductItemComponent } from '../product-item/product-item.component';
 import { ProductToolbarComponent } from '../product-toolbar/product-toolbar.component';
 import { MOCK_CATEGORIES } from '../../../core/mocks/categories.mock';
 import { QueryStringService } from '../../../core/services/query-string.service';
+import { CartService } from '../../../core/services/cart.service';
 
 @Component({
   selector: 'app-product-list',
@@ -21,11 +22,12 @@ export class ProductListComponent implements OnInit {
   private route = inject(ActivatedRoute);
   private destroyRef = inject(DestroyRef);
   private queryService = inject(QueryStringService);
+  private cartService = inject(CartService);
 
   products = signal<Product[]>([]);
   isLoading = signal<boolean>(true);
   viewMode = signal<'grid' | 'list'>('grid');
-  queryParams = signal<QueryParams>({filters: [], search: '', searchBy: []});
+  queryParams = signal<QueryParams>({ filters: [], search: '', searchBy: [] });
 
   categories = signal(MOCK_CATEGORIES);
 
@@ -63,14 +65,15 @@ export class ProductListComponent implements OnInit {
   }
 
   onAddToCart(product: Product) {
-    console.log('add', { product });
+    this.cartService.addToCart(product);
   }
 
   onRemoveFromCart(product: Product) {
-    console.log('remove', { product });
+    this.cartService.decreaseQuantity(product.id);
   }
 
   getQuantity(productId: number): number {
-    return 0; // Próximamente se conectará al CartService
+    const item = this.cartService.cartItems().find(i => i.product.id === productId);
+    return item ? item.quantity : 0;
   }
 }
