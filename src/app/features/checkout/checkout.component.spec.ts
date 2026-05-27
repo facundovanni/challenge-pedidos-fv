@@ -13,8 +13,12 @@ describe('CheckoutComponent', () => {
   let orderServiceSpy: jasmine.SpyObj<OrderService>;
 
   beforeEach(async () => {
-    cartServiceSpy = jasmine.createSpyObj('CartService', ['clearCart']);
+    cartServiceSpy = jasmine.createSpyObj('CartService', ['clearCart', 'removeFromCart']);
+
     cartServiceSpy.cartItems = signal([]);
+
+    cartServiceSpy.totalPrice = () => 0;
+    cartServiceSpy.totalItems = () => 0;
 
     orderServiceSpy = jasmine.createSpyObj('OrderService', ['submitOrder']);
 

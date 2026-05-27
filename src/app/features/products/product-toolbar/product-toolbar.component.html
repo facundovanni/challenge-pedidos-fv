@@ -3,8 +3,8 @@
   <div class="w-full xl:w-1/3">
     <app-search-input
       placeholder="Buscar producto..."
-      (search)="onSearch($event)"
-      [initialValue]="searchTerm()">
+      [(value)]="searchTerm"
+      (valueChange)="emitQuery()">
     </app-search-input>
   </div>
 
@@ -13,15 +13,16 @@
     <app-select-filter
       label="Categoría"
       [options]="categories()"
-      [initialValue]="selectedCategory()"
-      (selectionChanged)="onCategoryChange($event)">
+      [(value)]="selectedCategory"
+      (valueChange)="emitQuery()">
     </app-select-filter>
 
     <app-price-range
       label="Rango de Precio"
-      [initialMin]="priceMin()"
-      [initialMax]="priceMax()"
-      (rangeChanged)="onPriceChange($event)">
+      [(minPrice)]="priceMin"
+      [(maxPrice)]="priceMax"
+      (minPriceChange)="emitQuery()"
+      (maxPriceChange)="emitQuery()">
     </app-price-range>
 
     <button (click)="onReset()"

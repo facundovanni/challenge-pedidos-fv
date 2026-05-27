@@ -1,4 +1,4 @@
-import { Component, effect, ElementRef, input, output, ViewChild } from '@angular/core';
+import { Component, input, model } from '@angular/core';
 
 @Component({
   selector: 'app-select-filter',
@@ -10,25 +10,10 @@ import { Component, effect, ElementRef, input, output, ViewChild } from '@angula
 export class SelectFilterComponent {
   label = input<string>('');
   options = input<any[]>([]);
-  initialValue = input<string>('');
-  selectionChanged = output<string>();
 
-  @ViewChild('selectRef') selectElement!: ElementRef<HTMLSelectElement>;
-
-  constructor() {
-    effect(() => {
-      const val = this.initialValue() || '';
-      if (this.selectElement && this.selectElement.nativeElement.value !== val) {
-        this.selectElement.nativeElement.value = val;
-      }
-    });
-  }
+  value = model<string>('');
 
   onChange(event: Event) {
-    this.selectionChanged.emit((event.target as HTMLSelectElement).value);
-  }
-
-  reset() {
-    if (this.selectElement) this.selectElement.nativeElement.value = '';
+    this.value.set((event.target as HTMLSelectElement).value);
   }
 }

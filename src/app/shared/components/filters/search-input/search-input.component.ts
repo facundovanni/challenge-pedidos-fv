@@ -1,4 +1,4 @@
-import { Component, ElementRef, ViewChild, effect, input, output } from '@angular/core';
+import { Component, ElementRef, ViewChild, effect, input, model, output } from '@angular/core';
 
 @Component({
   selector: 'app-search-input',
@@ -6,31 +6,12 @@ import { Component, ElementRef, ViewChild, effect, input, output } from '@angula
   templateUrl: './search-input.component.html',
 })
 export class SearchInputComponent {
-  title = input<string>();
-  placeholder = input<string>('Buscar');
-  initialValue = input<string>('');
-  search = output<string>();
+  title = input<string>('');
+  placeholder = input<string>('Buscar...');
 
-  @ViewChild('inputRef') inputElement!: ElementRef<HTMLInputElement>;
+  value = model<string>('');
 
-  constructor() {
-    effect(() => {
-      const value = this.initialValue();
-      if (this.inputElement && this.inputElement.nativeElement.value !== value) {
-        this.inputElement.nativeElement.value = value;
-      }
-    });
-  }
-
-  onSearchClick() {
-    const value = this.inputElement.nativeElement.value;
-    this.search.emit(value);
-  }
-
-  reset() {
-    if (this.inputElement) {
-      this.inputElement.nativeElement.value = '';
-      this.search.emit('');
-    }
+  onInput(event: Event) {
+    this.value.set((event.target as HTMLInputElement).value);
   }
 }

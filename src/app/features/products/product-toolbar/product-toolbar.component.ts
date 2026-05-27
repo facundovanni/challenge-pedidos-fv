@@ -1,5 +1,5 @@
 import { MOCK_CATEGORIES } from './../../../core/mocks/categories.mock';
-import { Component, ElementRef, ViewChild, effect, input, output, signal } from '@angular/core';
+import { Component, effect, input, output, signal } from '@angular/core';
 import { QueryParams, FilterOption } from '../../../core/interface/query-params.interface';
 import { PriceRangeComponent } from '../../../shared/components/filters/price-range/price-range.component';
 import { SearchInputComponent } from '../../../shared/components/filters/search-input/search-input.component';
@@ -12,10 +12,6 @@ import { SelectFilterComponent } from '../../../shared/components/filters/select
   templateUrl: './product-toolbar.component.html'
 })
 export class ProductToolbarComponent {
-
-  @ViewChild(SearchInputComponent) searchInputComponent!: SearchInputComponent;
-  @ViewChild(SelectFilterComponent) selectFilterComponent!: SelectFilterComponent;
-  @ViewChild(PriceRangeComponent) priceRangeComponent!: PriceRangeComponent;
 
   categories = signal(MOCK_CATEGORIES);
   queryChanged = output<QueryParams>();
@@ -45,46 +41,24 @@ export class ProductToolbarComponent {
     }, { allowSignalWrites: true });
   }
 
-  onSearch(term: string) {
-    this.searchTerm.set(term);
-    this.emitQuery();
-  }
-
-  onCategoryChange(categoryId: string) {
-    this.selectedCategory.set(categoryId);
-    this.emitQuery();
-  }
-
-  onPriceChange(range: { min: number | null; max: number | null }) {
-    this.priceMin.set(range.min);
-    this.priceMax.set(range.max);
-    this.emitQuery();
-  }
-
   onReset() {
     this.searchTerm.set('');
     this.selectedCategory.set('');
     this.priceMin.set(null);
     this.priceMax.set(null);
 
-    this.searchInputComponent?.reset();
-    this.selectFilterComponent?.reset();
-    this.priceRangeComponent?.reset();
-
     this.emitQuery();
   }
 
-  private emitQuery() {
+  emitQuery() {
     const activeFilters: FilterOption[] = [];
 
     if (this.selectedCategory()) {
       activeFilters.push({ key: 'categoryId', value: this.selectedCategory(), op: 'eq' });
     }
-
     if (this.priceMin() !== null) {
       activeFilters.push({ key: 'price', value: this.priceMin()!.toString(), op: 'ge' });
     }
-
     if (this.priceMax() !== null) {
       activeFilters.push({ key: 'price', value: this.priceMax()!.toString(), op: 'le' });
     }

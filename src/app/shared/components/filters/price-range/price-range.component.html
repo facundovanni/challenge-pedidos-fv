@@ -3,10 +3,12 @@
     {{ label() }}
   </label>
   <div class="flex items-center gap-2">
-    <input #minRef type="number" placeholder="Min" (input)="onInput()"
-      class="pl-10 px-4 py-4 text-xl bg-zinc-50 border-2 border-zinc-200 rounded-2xl focus:border-zinc-900 focus:bg-white focus:outline-none transition-all" />
-    <span class="text-zinc-400 font-bold">-</span>
-    <input #maxRef type="number" placeholder="Max" (input)="onInput()"
-      class="pl-10 px-4 py-4 text-xl bg-zinc-50 border-2 border-zinc-200 rounded-2xl focus:border-zinc-900 focus:bg-white focus:outline-none transition-all" />
-  </div>
+        <input type="number" placeholder="Min"
+               [value]="minPrice() ?? ''" (input)="onMinInput($event)"
+               class="w-48 px-4 py-4 text-xl bg-zinc-50 border-2 border-zinc-200 rounded-2xl focus:border-zinc-900 focus:bg-white focus:outline-none transition-all" />
+        <span class="text-zinc-400 font-bold">-</span>
+        <input type="number" placeholder="Max"
+               [value]="maxPrice() ?? ''" (input)="onMaxInput($event)"
+               class="w-48 px-4 py-4 text-xl bg-zinc-50 border-2 border-zinc-200 rounded-2xl focus:border-zinc-900 focus:bg-white focus:outline-none transition-all" />
+      </div>
 </div>

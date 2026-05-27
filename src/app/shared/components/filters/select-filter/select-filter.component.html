@@ -2,7 +2,7 @@
   <label class="text-sm font-bold uppercase tracking-widest text-zinc-500 pl-2">
     {{ label() }}
   </label>
-  <select #selectRef (change)="onChange($event)"
+  <select [value]="value()" (change)="onChange($event)"
     class="w-full px-6 py-4 text-xl bg-zinc-50 border-2 border-zinc-200 rounded-2xl focus:border-zinc-900 focus:bg-white focus:outline-none transition-all appearance-none cursor-pointer">
     <option value="">Todos</option>
     @for (option of options(); track option.id) {
