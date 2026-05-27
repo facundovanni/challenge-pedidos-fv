@@ -3,12 +3,17 @@
     {{ title() ? 'Buscar por ' + title() : 'Buscar...' }}
   </label>
 
-  <input
+  <div class="flex gap-2">
+    <input
       #inputRef
       type="search"
       [placeholder]="placeholder()"
-      (input)="handleEvent($event)"
-      (search)="handleEvent($event)"
       class="w-full px-6 py-4 text-xl bg-zinc-50 border-2 border-zinc-200 rounded-2xl focus:border-zinc-900 focus:bg-white focus:outline-none transition-all placeholder:text-zinc-400"
     />
+    <button
+      (click)="onSearchClick()"
+      class="px-8 py-4 bg-zinc-900 text-white font-bold rounded-2xl hover:bg-black transition-colors active:scale-95">
+      Buscar
+    </button>
+  </div>
 </div>

@@ -1,4 +1,4 @@
-import { Component, ElementRef, QueryList, ViewChildren, input, output } from '@angular/core';
+import { Component, effect, ElementRef, input, output, ViewChild } from '@angular/core';
 
 @Component({
   selector: 'app-price-range',
@@ -10,28 +10,40 @@ import { Component, ElementRef, QueryList, ViewChildren, input, output } from '@
 })
 export class PriceRangeComponent {
 
-  label = input.required<string>();
-  rangeChanged = output<{min: number | null, max: number | null}>();
+  label = input<string>('');
+  initialMin = input<number | null>(null);
+  initialMax = input<number | null>(null);
+  rangeChanged = output<{ min: number | null; max: number | null }>();
 
-  @ViewChildren('priceInput') inputs!: QueryList<ElementRef<HTMLInputElement>>;
+  @ViewChild('minRef') minElement!: ElementRef<HTMLInputElement>;
+  @ViewChild('maxRef') maxElement!: ElementRef<HTMLInputElement>;
 
-  private currentMin: number | null = null;
-  private currentMax: number | null = null;
+  constructor() {
+    effect(() => {
+      const min = this.initialMin();
+      const max = this.initialMax();
 
-  updateMin(event: Event) {
-    const val = (event.target as HTMLInputElement).value;
-    this.rangeChanged.emit({ min: val ? Number(val) : null, max: null });
+      if (this.minElement && this.minElement.nativeElement.value !== (min?.toString() || '')) {
+        this.minElement.nativeElement.value = min !== null ? min.toString() : '';
+      }
+      if (this.maxElement && this.maxElement.nativeElement.value !== (max?.toString() || '')) {
+        this.maxElement.nativeElement.value = max !== null ? max.toString() : '';
+      }
+    });
   }
 
-  updateMax(event: Event) {
-    const val = (event.target as HTMLInputElement).value;
-    this.rangeChanged.emit({ min: null, max: val ? Number(val) : null });
+  onInput() {
+    const minVal = this.minElement.nativeElement.value;
+    const maxVal = this.maxElement.nativeElement.value;
+
+    this.rangeChanged.emit({
+      min: minVal ? Number(minVal) : null,
+      max: maxVal ? Number(maxVal) : null
+    });
   }
 
   reset() {
-    this.inputs.forEach(input => {
-      input.nativeElement.value = '';
-    });
-    this.rangeChanged.emit({ min: null, max: null });
+    if (this.minElement) this.minElement.nativeElement.value = '';
+    if (this.maxElement) this.maxElement.nativeElement.value = '';
   }
 }

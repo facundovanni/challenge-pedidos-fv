@@ -42,7 +42,7 @@ export class ProductListComponent implements OnInit {
     this.router.navigate([], {
       relativeTo: this.route,
       queryParams: urlParams,
-      queryParamsHandling: 'merge'
+      queryParamsHandling: 'replace'
     });
   }
 

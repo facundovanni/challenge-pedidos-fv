@@ -14,6 +14,8 @@ import { SelectFilterComponent } from '../../../shared/components/filters/select
 export class ProductToolbarComponent {
 
   @ViewChild(SearchInputComponent) searchInputComponent!: SearchInputComponent;
+  @ViewChild(SelectFilterComponent) selectFilterComponent!: SelectFilterComponent;
+  @ViewChild(PriceRangeComponent) priceRangeComponent!: PriceRangeComponent;
 
   categories = signal(MOCK_CATEGORIES);
   queryChanged = output<QueryParams>();
@@ -28,7 +30,6 @@ export class ProductToolbarComponent {
     effect(() => {
       const params = this.initialParams();
 
-      console.log({params: this.initialParams()});
       if (params) {
         this.searchTerm.set(params.search || '');
 
@@ -62,8 +63,13 @@ export class ProductToolbarComponent {
 
   onReset() {
     this.searchTerm.set('');
-    this.searchInputComponent?.reset();
     this.selectedCategory.set('');
+    this.priceMin.set(null);
+    this.priceMax.set(null);
+
+    this.searchInputComponent?.reset();
+    this.selectFilterComponent?.reset();
+    this.priceRangeComponent?.reset();
 
     this.emitQuery();
   }

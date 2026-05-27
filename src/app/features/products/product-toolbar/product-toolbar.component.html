@@ -13,11 +13,14 @@
     <app-select-filter
       label="Categoría"
       [options]="categories()"
+      [initialValue]="selectedCategory()"
       (selectionChanged)="onCategoryChange($event)">
     </app-select-filter>
 
     <app-price-range
       label="Rango de Precio"
+      [initialMin]="priceMin()"
+      [initialMax]="priceMax()"
       (rangeChanged)="onPriceChange($event)">
     </app-price-range>
 
