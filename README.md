@@ -6,7 +6,7 @@ Este proyecto ha sido desarrollado utilizando **Angular 18** con componentes **S
 
 1. **Clonar el repositorio:**
   ```bash
-   git clone <url-de-tu-repo>
+   git clone https://github.com/facundovanni/challenge-pedidos-fv
    cd challenge-pedidos-fv
   ```
 
