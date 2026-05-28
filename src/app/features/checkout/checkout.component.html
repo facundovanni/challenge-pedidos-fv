@@ -1,0 +1,83 @@
+<div class="max-w-4xl mx-auto py-12 px-6 flex flex-col h-full min-h-[80vh]">
+
+  <div class="mb-10">
+    <h1 class="text-5xl font-black text-black tracking-tighter">Finalizar Compra</h1>
+    <a routerLink="/cart" class="text-xl font-bold text-gray-500 hover:text-black underline mt-2 inline-block">
+      Volver al pedido
+    </a>
+  </div>
+
+  @if (orderSuccessId()) {
+    <div class="flex-1 flex flex-col items-center justify-center py-20 border-4 border-black bg-white text-center">
+      <h2 class="text-4xl font-black mb-4">¡Pedido Confirmado!</h2>
+      <p class="text-2xl text-gray-600 mb-8">Tu número de orden es:</p>
+      <div class="text-6xl font-black text-black px-10 py-6 border-4 border-black bg-gray-50 mb-10">
+        {{ orderSuccessId() }}
+      </div>
+      <a routerLink="/products"
+        class="px-10 py-6 bg-black text-white text-2xl font-black focus:ring-4 focus:ring-gray-300 active:scale-95 transition-transform">
+        Volver al Inicio
+      </a>
+    </div>
+  }
+  @else {
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+
+      <form [formGroup]="checkoutForm" (ngSubmit)="onSubmit()" class="flex flex-col gap-8">
+
+        <div class="flex flex-col gap-2">
+          <label for="fullName" class="text-2xl font-black">Nombre Completo</label>
+          <input type="text" id="fullName" formControlName="fullName"
+            class="px-6 py-5 text-2xl border-2 border-black focus:ring-4 focus:ring-gray-300 focus:outline-hidden bg-white"
+            placeholder="Ej: Juan Pérez">
+          @if (checkoutForm.get('fullName')?.invalid && checkoutForm.get('fullName')?.touched) {
+            <span class="text-lg font-bold text-black bg-gray-200 px-4 py-2 self-start">El nombre es requerido</span>
+          }
+        </div>
+
+        <div class="flex flex-col gap-2">
+          <label for="email" class="text-2xl font-black">Correo Electrónico</label>
+          <input type="email" id="email" formControlName="email"
+            class="px-6 py-5 text-2xl border-2 border-black focus:ring-4 focus:ring-gray-300 focus:outline-hidden bg-white"
+            placeholder="Ej: juan@email.com">
+          @if (checkoutForm.get('email')?.invalid && checkoutForm.get('email')?.touched) {
+            <span class="text-lg font-bold text-black bg-gray-200 px-4 py-2 self-start">Ingresá un correo válido</span>
+          }
+        </div>
+
+        @if (errorMessage()) {
+          <div class="p-6 border-4 border-black bg-black text-white">
+            <h3 class="text-2xl font-black mb-2">Error en el pago</h3>
+            <p class="text-lg font-bold">{{ errorMessage() }}</p>
+          </div>
+        }
+
+        <button type="submit" [disabled]="isLoading()"
+          class="mt-4 px-8 py-6 bg-black rounded-2xl text-white text-2xl font-black disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-900 focus:ring-4 focus:ring-gray-300 active:scale-95 transition-all flex justify-center items-center gap-4">
+          @if (isLoading()) {
+            <span class="animate-pulse">Procesando pago...</span>
+          } @else {
+            <span>Pagar {{ cartService.totalPrice() | currency:'$':'symbol':'1.0-0' }}</span>
+          }
+        </button>
+      </form>
+
+      <div class="bg-gray-50 border-2 border-black p-8 h-fit">
+        <h3 class="text-3xl font-black mb-6 border-b-2 border-black pb-4">Resumen</h3>
+        <div class="flex flex-col gap-4">
+          @for (item of cartService.cartItems(); track item.product.id) {
+            <div class="flex justify-between items-center text-xl font-bold text-gray-700">
+              <span>{{ item.quantity }}x {{ item.product.name }}</span>
+              <span>{{ (item.product.price * item.quantity) | currency:'$':'symbol':'1.0-0' }}</span>
+            </div>
+          }
+        </div>
+        <div class="mt-8 pt-6 border-t-4 border-black flex justify-between items-center">
+          <span class="text-2xl font-black uppercase">Total</span>
+          <span class="text-4xl font-black">{{ cartService.totalPrice() | currency:'$':'symbol':'1.0-0' }}</span>
+        </div>
+      </div>
+
+    </div>
+  }
+</div>

@@ -1,0 +1,14 @@
+<div class="flex flex-col gap-2">
+  <label class="text-sm font-bold uppercase tracking-widest text-zinc-500 pl-2">
+    {{ label() }}
+  </label>
+  <div class="flex items-center gap-2">
+        <input type="number" placeholder="Min"
+               [value]="minPrice() ?? ''" (input)="onMinInput($event)"
+               class="w-48 px-4 py-4 text-xl bg-zinc-50 border-2 border-zinc-200 rounded-2xl focus:border-zinc-900 focus:bg-white focus:outline-none transition-all" />
+        <span class="text-zinc-400 font-bold">-</span>
+        <input type="number" placeholder="Max"
+               [value]="maxPrice() ?? ''" (input)="onMaxInput($event)"
+               class="w-48 px-4 py-4 text-xl bg-zinc-50 border-2 border-zinc-200 rounded-2xl focus:border-zinc-900 focus:bg-white focus:outline-none transition-all" />
+      </div>
+</div>

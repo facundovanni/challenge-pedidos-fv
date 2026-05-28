@@ -1,0 +1,12 @@
+<div class="flex flex-col gap-2 w-full">
+  <label class="text-sm font-bold uppercase tracking-widest text-zinc-500 pl-2">
+    {{ title() ? 'Buscar por ' + title() : 'Buscar...' }}
+  </label>
+
+  <div class="relative">
+      <input type="search" [placeholder]="placeholder()"
+             [value]="value()"
+             (input)="onInput($event)" (search)="onInput($event)"
+             class="w-full px-6 py-4 text-xl bg-zinc-50 border-2 border-zinc-200 rounded-2xl focus:border-zinc-900 focus:bg-white focus:outline-none transition-all placeholder:text-zinc-400" />
+    </div>
+</div>
