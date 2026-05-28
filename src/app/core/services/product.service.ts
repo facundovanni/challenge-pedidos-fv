@@ -44,4 +44,13 @@ export class ProductService {
       }, 1500);
     });
   }
+
+  getProductById(id: number): Promise<Product | undefined> {
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        const product = MOCK_PRODUCTS.find(p => p.id === id);
+        resolve(product);
+      }, 500);
+    });
+  }
 }

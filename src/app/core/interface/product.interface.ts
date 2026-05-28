@@ -6,4 +6,6 @@ export interface Product {
   price: number;
   categoryId: number;
   category: GenericDTO;
+  description?: string;
+  imageUrl?: string;
 }
