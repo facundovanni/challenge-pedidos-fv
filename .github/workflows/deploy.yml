@@ -24,8 +24,7 @@ jobs:
       - name: Configurar Node.js
         uses: actions/setup-node@v4
         with:
-          node-base: '20'
-          cache: 'pnpm'
+          node-version: '20'
 
       - name: Instalar dependencias
         run: pnpm install --frozen-lockfile
