@@ -1,5 +1,5 @@
 <div class="max-w-4xl mx-auto py-12 px-6 flex flex-col h-full min-h-[80vh]">
-  
+
   <div class="mb-10">
     <h1 class="text-5xl font-black text-black tracking-tighter">Finalizar Compra</h1>
     <a routerLink="/cart" class="text-xl font-bold text-gray-500 hover:text-black underline mt-2 inline-block">
@@ -19,12 +19,12 @@
         Volver al Inicio
       </a>
     </div>
-  } 
+  }
   @else {
     <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
-      
+
       <form [formGroup]="checkoutForm" (ngSubmit)="onSubmit()" class="flex flex-col gap-8">
-        
+
         <div class="flex flex-col gap-2">
           <label for="fullName" class="text-2xl font-black">Nombre Completo</label>
           <input type="text" id="fullName" formControlName="fullName"
@@ -53,7 +53,7 @@
         }
 
         <button type="submit" [disabled]="isLoading()"
-          class="mt-4 px-8 py-6 bg-black text-white text-2xl font-black disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-900 focus:ring-4 focus:ring-gray-300 active:scale-95 transition-all flex justify-center items-center gap-4">
+          class="mt-4 px-8 py-6 bg-black rounded-2xl text-white text-2xl font-black disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-900 focus:ring-4 focus:ring-gray-300 active:scale-95 transition-all flex justify-center items-center gap-4">
           @if (isLoading()) {
             <span class="animate-pulse">Procesando pago...</span>
           } @else {
