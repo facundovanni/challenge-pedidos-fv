@@ -33,6 +33,7 @@
           },
           "configurations": {
             "production": {
+              "baseHref": "/challenge-pedidos-fv/",
               "budgets": [
                 {
                   "type": "initial",
